@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculator-container">
+    <div class="calculator-container">   
         <h1>Stitch Calculator</h1>
         <div class="input-group">
             <label for="stitchesInput">Number of stitches counted (X):</label>
@@ -16,7 +16,19 @@
         <button id="calculateBtn">Calculate</button>
         <div id="results" class="hidden">
             <p>Number of Stitches: <span id="resultY"></span></p>
-            <p>Number of lace repetitions: <span id="resultZ"></span></p>
+            <p>Number of lace repetitions: 
+                <span id="resultZ"></span>
+                <span id="resultEContainer" class="alt-result"> | <span id="resultE"></span></span>
+                <span id="resultFContainer" class="alt-result"> | <span id="resultF"></span></span>
+            </p>
+            <div class="input-group">
+                <label for="zVariantSelect">Use for further calculations:</label>
+                <select id="zVariantSelect">
+                    <option value="Z">Stay</option>
+                    <option value="E">Up by 1</option>
+                    <option value="F">Up by 2</option>
+                </select>
+            </div>
             <div class="final-message-container">
                 <p id="finalMessage"></p>
             </div>

@@ -1,3 +1,20 @@
+#resultEContainer, #resultFContainer {
+    color: #738A6E;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+#zVariantSelect {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 2px solid #bfcfbb;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #fdfdfd;
+    color: #344c3d;
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 body {

@@ -5,14 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultsDiv = document.getElementById('results');
     const resultY_span = document.getElementById('resultY');
     const resultZ_span = document.getElementById('resultZ');
+    const resultE_span = document.getElementById('resultE');
+    const resultF_span = document.getElementById('resultF');
     const finalMessage_p = document.getElementById('finalMessage');
     const inclineContainer = document.getElementById('inclineContainer');
     const inclineMessage = document.getElementById('inclineMessage');
+    const zVariantSelect = document.getElementById('zVariantSelect');
+
+    // Store the latest calculated values for Z, E, F, Y
+    let latest = { y: 0, z: 0, e: 0, f: 0 };
 
     /**
      * Performs the calculation based on the user's input.
+     * This is called on calculate and also when switching Z/E/F.
+     * @param {string} [variant] - 'Z', 'E', or 'F'. If not provided, uses the select value.
      */
-    function performCalculation() {
+    function performCalculation(variant) {
         // Get the value from the input and convert it to a whole number
         const x = parseInt(stitchesInput.value, 10);
 
@@ -29,21 +37,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = x - 1;
 
         // 2. Y / 18 = Z (rounded up)
-        // Math.ceil() always rounds a number up to the next largest integer.
         const z = Math.ceil(y / 18);
+        const e = z + 1;
+        const f = z + 2;
 
-        // 3. Z * 18 + 1 = A
-        const a = z * 18 + 1;
+        // Save for later use
+        latest = { y, z, e, f };
 
-        // --- End of Calculations ---
-
-        // Display the results on the page
+        // Show all Z, E, F values
         resultY_span.textContent = y;
         resultZ_span.textContent = z;
-        finalMessage_p.textContent = `You need to go from ${y} to ${a}.`;
+        if (resultE_span) resultE_span.textContent = e;
+        if (resultF_span) resultF_span.textContent = f;
 
         // Make the results section visible
         resultsDiv.classList.remove('hidden');
+
+        // Determine which variant to use for further calculations
+        let useVariant = variant || (zVariantSelect ? zVariantSelect.value : 'Z');
+        let zLike = z;
+        if (useVariant === 'E') zLike = e;
+        if (useVariant === 'F') zLike = f;
+
+        // 3. Zlike * 18 + 1 = A
+        const a = zLike * 18 + 1;
+        finalMessage_p.textContent = `You need to go from ${y} to ${a}.`;
 
         // --- Start of Second Calculation (B and C) ---
         const b = a - y;
@@ -62,8 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // When the dropdown changes, recalculate using the selected variant
+    if (zVariantSelect) {
+        zVariantSelect.addEventListener('change', () => {
+            // Only recalculate if we have a valid Y (i.e., calculation already done)
+            if (latest && latest.y > 0) {
+                performCalculation();
+            }
+        });
+    }
+
     // Run the calculation when the button is clicked
-    calculateBtn.addEventListener('click', performCalculation);
+    calculateBtn.addEventListener('click', () => performCalculation());
 
     // Also run the calculation if the user presses 'Enter' in the input field
     stitchesInput.addEventListener('keydown', (event) => {
