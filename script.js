@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalMessage_p = document.getElementById('finalMessage');
     const inclineContainer = document.getElementById('inclineContainer');
     const inclineMessage = document.getElementById('inclineMessage');
+    const increaseCountContainer = document.getElementById('increaseCountContainer');
+    const increaseCount = document.getElementById('increaseCount');
     const zVariantSelect = document.getElementById('zVariantSelect');
 
     // Store the latest calculated values for Z, E, F, Y
@@ -72,10 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Y / B = C. Math.round() handles the rounding rule you specified:
             // it rounds to the nearest integer (e.g., 2.5 -> 3, 2.49 -> 2).
             const c = Math.round(y / b);
+
+            increaseCount.textContent = b;
+            increaseCountContainer.classList.remove('hidden');
+
             inclineMessage.textContent = `Make an INC every ${c} ST.`;
             inclineContainer.classList.remove('hidden');
         } else {
             // Hide the incline message if it's not applicable for this calculation
+            increaseCountContainer.classList.add('hidden');
             inclineContainer.classList.add('hidden');
         }
     }

@@ -131,7 +131,7 @@ button:hover {
     border-radius: 8px;
     text-align: center;
     font-weight: bold;
-    color: #344c3d; /* evergreen for high contrast */
+    color: #fbfaf8; /* A light color for contrast against the dark background */
 }
 
 /* Specific margins for each box */
